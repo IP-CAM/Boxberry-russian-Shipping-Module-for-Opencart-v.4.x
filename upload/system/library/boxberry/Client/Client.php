@@ -29,39 +29,24 @@ use HttpException;
  * Базовый класс, который создает объекты запросов и исполняет их.
  * Class Client
  * @package Boxberry\Client
+ *
+ * @var string $key
+ * @var string $api_url
+ * @var string $production_url
+ * @var string $dadataApiUrl
+ * @var string $dadataApiToken
+ * @var bool   $debug_mode_enabled
+ * @var string $debug_url
  */
 class Client
 {
-    /**
-     * @var string
-     */
-    protected string $key;
-
-    /**
-     * @var string
-     */
-    protected string $api_url;
-
-    /**
-     * @var string
-     */
-    protected string $production_url = 'https://api.boxberry.ru/json.php';
-
-    /**
-     * @var string
-     */
-    protected string $dadataApiUrl = 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address';
-
-    /**
-     * @var string
-     */
-    protected string $dadataApiToken = 'Token a105367bc6479ffb2a355fad7536e0fb504c1b97';
-
-    /**
-     * @var bool
-     */
-    protected bool $debug_mode_enabled;
-    private string $debug_url;
+    protected string $key                = '';
+    protected string $api_url            = '';
+    protected string $production_url     = 'https://api.boxberry.ru/json.php';
+    protected string $dadataApiUrl       = 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address';
+    protected string $dadataApiToken     = 'Token a105367bc6479ffb2a355fad7536e0fb504c1b97';
+    protected bool   $debug_mode_enabled = false;
+    private   string $debug_url          = '';
 
     public function __construct()
     {
@@ -86,9 +71,9 @@ class Client
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getKey(): ?string
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -127,11 +112,11 @@ class Client
      */
     public function getDadataHeaders(): array
     {
-        return [
+        return array(
             'Content-Type: application/json',
             'Accept: application/json',
-            'Authorization: '.$this->dadataApiToken
-        ];
+            'Authorization: ' . $this->dadataApiToken
+        );
     }
 
     /**
@@ -337,7 +322,7 @@ class Client
      */
     public function execute(Request $request): object|bool
     {
-        if ($this->api_url === null || $this->key === null) {
+        if ($this->api_url === '' || $this->key === '') {
             throw new BadSettingsException('Проверьте секретный ключ и адрес апи');
         }
 
@@ -349,21 +334,20 @@ class Client
         $this->disableDebugMode();
 
         if (property_exists($request, 'method') && $request->method === 'POST') {
-            $headers = [
+            $headers = array(
                 'Content-Type: application/json',
                 'Accept: application/json'
-            ];
+            );
 
-            $credentials = [
+            $credentials = array(
                 'token' => $this->key,
-                'method' => $request->getClassName(),
-            ];
+                'method' => $request->getClassName()
+            );
 
             if ($request->getClassName() === 'ParselCreate') {
                 $sdata = array(
                     'sdata' => $serializer->toArray($request)
                 );
-
                 $data = array_merge($credentials, $sdata);
             }
 
@@ -386,6 +370,7 @@ class Client
             $data = array_merge($data, $serializer->toArray($request));
             $answer = HTTP::get($this->api_url, $data)->getAnswer();
         }
+
         unset($serializer);
         $answerClass = $request->getResultClass();
         $type = $this->getType($answerClass);

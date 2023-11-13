@@ -16,7 +16,6 @@
 
 namespace Boxberry\Client\Exceptions;
 
-
 /**
  * Class UnknownTypeException
  * @package Boxberry\Client\Exceptions

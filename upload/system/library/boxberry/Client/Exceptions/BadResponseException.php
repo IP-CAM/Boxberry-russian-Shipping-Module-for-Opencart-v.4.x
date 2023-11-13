@@ -16,7 +16,6 @@
 
 namespace Boxberry\Client\Exceptions;
 
-
 /**
  * Class BadResponseException
  * @package Boxberry\Client\Exceptions

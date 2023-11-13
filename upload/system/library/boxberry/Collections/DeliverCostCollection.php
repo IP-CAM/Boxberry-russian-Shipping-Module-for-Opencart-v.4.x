@@ -16,7 +16,6 @@
 
 namespace Boxberry\Collections;
 
-
 use Boxberry\Client\Exceptions\BadResponseException;
 use Boxberry\Models\DeliveryCosts;
 use Boxberry\Collections\Exceptions\BadValueException;

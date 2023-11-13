@@ -6,6 +6,10 @@ use Boxberry\Collections\Exceptions\BadValueException;
 use Boxberry\Models\DadataSuggestions;
 use Exception;
 
+/**
+ * Class DadataSuggestionsCollection
+ * @package Boxberry\Collections
+ */
 class DadataSuggestionsCollection extends Collection
 {
     /**

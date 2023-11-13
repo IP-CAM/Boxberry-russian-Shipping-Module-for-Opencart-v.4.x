@@ -21,13 +21,12 @@ use Boxberry\Client\Exceptions\BadResponseException;
 /**
  * Class PointsByCodeResponse
  * @package Boxberry\Client
+ *
+ * @var string $code
  */
 class PointsByCodeResponse
 {
-    /**
-     * @var string
-     */
-    protected string $code;
+    protected string $code = '';
 
     /**
      * PointsByCodeResponse constructor.

@@ -22,18 +22,14 @@ use ArrayAccess, Countable, Iterator, Serializable, ArrayIterator;
  * Абстрактная коллекция, служащая базой.
  * Class Collection
  * @package Boxberry\Collections
+ *
+ * @var array $_container
+ * @var int   $_position
  */
 abstract class Collection implements ArrayAccess, Countable, Iterator, Serializable
 {
-    /**
-     * @var array
-     */
     protected array $_container = array();
-
-    /**
-     * @var int
-     */
-    protected int $_position = 0;
+    protected int   $_position  = 0;
 
     /**
      * Collection constructor.

@@ -21,17 +21,14 @@ use Boxberry\Client\Exceptions\BadResponseException;
 /**
  * Class ParselCreateResponse
  * @package Boxberry\Client
+ *
+ * @var string $track
+ * @var string $label
  */
 class ParselCreateResponse
 {
-    /**
-     * @var string
-     */
-    protected mixed $track = null;
-    /**
-     * @var string
-     */
-    protected mixed $label = null;
+    protected string $track = '';
+    protected string $label = '';
 
     /**
      * ParselCreateResponse constructor.

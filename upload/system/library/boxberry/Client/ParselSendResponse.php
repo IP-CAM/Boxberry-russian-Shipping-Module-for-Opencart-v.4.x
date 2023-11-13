@@ -18,24 +18,17 @@ use Boxberry\Client\Exceptions\BadResponseException;
 /**
  * Class ParselSendResponse
  * @package Boxberry\Client
+ *
+ * @var string $id
+ * @var string $label
+ * @var string $url_tmc
+ * @var string $sticker
  */
 class ParselSendResponse
 {
-    /**
-     * @var string
-     */
     protected string $id;
-    /**
-     * @var string
-     */
     protected string $label;
-    /**
-     * @var string
-     */
     protected string $url_tmc;
-    /**
-     * @var string
-     */
     protected string $sticker;
 
     /**

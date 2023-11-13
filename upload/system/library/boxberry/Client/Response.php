@@ -20,13 +20,12 @@ namespace Boxberry\Client;
  * Дефолтный класс ответа HTTP
  * Class Response
  * @package Boxberry\Client
+ *
+ * @var array $_answer
  */
 class Response
 {
-    /**
-     * @var array
-     */
-    protected array $_answer;
+    protected array $_answer = array();
 
     /**
      * Response constructor.

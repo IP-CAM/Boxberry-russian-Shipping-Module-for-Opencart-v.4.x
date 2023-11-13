@@ -6,6 +6,10 @@ use Boxberry\Collections\Exceptions\BadValueException;
 use Boxberry\Models\DeliveryCalculation;
 use Exception;
 
+/**
+ * Class DeliveryCalculationCollection
+ * @package Boxberry\Collections
+ */
 class DeliveryCalculationCollection extends Collection
 {
     /**

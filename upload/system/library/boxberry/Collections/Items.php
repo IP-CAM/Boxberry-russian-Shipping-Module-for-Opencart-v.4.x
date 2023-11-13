@@ -19,7 +19,6 @@ namespace Boxberry\Collections;
 use Boxberry\Collections\Exceptions\BadValueException;
 use Boxberry\Models\Item;
 
-
 /**
  * Class Items
  * @package Boxberry\Collections

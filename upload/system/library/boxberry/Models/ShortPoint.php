@@ -16,7 +16,6 @@
 
 namespace Boxberry\Models;
 
-
 /**
  * Class ShortPoint
  * @package Boxberry\Models

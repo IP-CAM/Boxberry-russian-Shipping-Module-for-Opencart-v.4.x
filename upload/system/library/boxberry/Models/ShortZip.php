@@ -16,7 +16,6 @@
 
 namespace Boxberry\Models;
 
-
 /**
  * Class ShortZip
  * @package Boxberry\Models

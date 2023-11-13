@@ -19,7 +19,6 @@ namespace Boxberry\Collections;
 use Boxberry\Collections\Exceptions\BadValueException;
 use Boxberry\Models\CourierDeliveryShort;
 
-
 /**
  * Class CourierListCollection
  * @package Boxberry\Collections

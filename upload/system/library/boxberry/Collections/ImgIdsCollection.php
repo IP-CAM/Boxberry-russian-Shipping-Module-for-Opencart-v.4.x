@@ -16,7 +16,6 @@
 
 namespace Boxberry\Collections;
 
-
 /**
  * Class ImgIdsCollection
  * @package Boxberry\Collections

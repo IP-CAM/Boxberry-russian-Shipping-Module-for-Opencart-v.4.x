@@ -20,14 +20,18 @@ use Boxberry\Client\Exceptions\BadResponseException;
 use Exception;
 use HttpException;
 use Boxberry\Logger\Logger;
+
 /**
  * Class HTTP
  * @package Boxberry\Client
+ *
+ * @var string $log_path
+ * @var array  $methods_disable_log_response
  */
 class HTTP
 {
     protected static string $log_path = DIR_LOGS . 'api_boxberry';
-    protected static array $methods_disable_log_response = [
+    protected static array $methods_disable_log_response = array(
         'ListCities',
         'ListCitiesFull',
         'ListZips',
@@ -36,7 +40,8 @@ class HTTP
         'PointsForParcels',
         'PointsByPostCode',
         'CourierListCities'
-    ];
+    );
+
     /**
      * @param $api_url
      * @param $args

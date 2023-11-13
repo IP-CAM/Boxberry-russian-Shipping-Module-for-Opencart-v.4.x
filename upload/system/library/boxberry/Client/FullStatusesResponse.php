@@ -27,13 +27,13 @@ use Boxberry\Collections\ListStatusesCollection;
  *
  * @var ListStatusesCollection $statuses
  * @var ListProductsCollection $products
- * @var mixed $PD
+ * @var bool $PD
  */
 class FullStatusesResponse
 {
     protected ListStatusesCollection $statuses;
     protected ListProductsCollection $products;
-    protected mixed $PD = null;
+    protected bool $PD = false; // Признак частичной выдачи заказа
 
     /**
      * FullStatusesResponse constructor.
@@ -76,25 +76,9 @@ class FullStatusesResponse
     }
 
     /**
-     * @return string|null
+     * @return ListProductsCollection
      */
-    public function getPD(): ?string
-    {
-        return $this->PD;
-    }
-
-    /**
-     * @param string $PD
-     */
-    public function setPD(string $PD): void
-    {
-        $this->PD = $PD;
-    }
-
-    /**
-     * @return ListProductsCollection|null
-     */
-    public function getProducts(): ?ListProductsCollection
+    public function getProducts(): ListProductsCollection
     {
         return $this->products;
     }
@@ -107,4 +91,19 @@ class FullStatusesResponse
         $this->products = $products;
     }
 
+    /**
+     * @return bool
+     */
+    public function getPD(): bool
+    {
+        return $this->PD;
+    }
+
+    /**
+     * @param bool $PD
+     */
+    public function setPD(bool $PD): void
+    {
+        $this->PD = $PD;
+    }
 }

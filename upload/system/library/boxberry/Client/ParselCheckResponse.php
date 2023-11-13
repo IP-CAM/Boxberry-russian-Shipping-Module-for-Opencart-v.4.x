@@ -21,13 +21,12 @@ use Boxberry\Client\Exceptions\BadResponseException;
 /**
  * Class ParselCheckResponse
  * @package Boxberry\Client
+ *
+ * @var string $label
  */
 class ParselCheckResponse
 {
-    /**
-     * @var string
-     */
-    protected mixed $label = null;
+    protected mixed $label = '';
 
     /**
      * ParselCheckResponse constructor.

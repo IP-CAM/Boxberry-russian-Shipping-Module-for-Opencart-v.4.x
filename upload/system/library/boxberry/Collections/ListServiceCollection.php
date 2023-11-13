@@ -25,10 +25,10 @@ use Boxberry\Models\Service;
  */
 class ListServiceCollection extends Collection
 {
-
     /**
      * ListServiceCollection constructor.
      * @param array $data
+     * @throws BadValueException
      */
     public function __construct($data = null)
     {
@@ -45,7 +45,7 @@ class ListServiceCollection extends Collection
      * @param mixed $value
      * @throws BadValueException
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (!$value instanceof Service) {
             throw new BadValueException();

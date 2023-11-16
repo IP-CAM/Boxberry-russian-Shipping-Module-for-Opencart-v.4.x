@@ -337,6 +337,15 @@
                                         {# Статус #}
                                         <div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="pickup_prepaid_status">{{ text_status }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_pickup_prepaid_status" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_pickup_prepaid_status" value="1" id="pickup_prepaid_status" class="form-check-input"{% if shipping_boxberry_pickup_prepaid_status %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="pickup_prepaid_status">{{ text_status }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="pickup_prepaid_status" name="shipping_boxberry_pickup_prepaid_status">
                                                     {% if shipping_boxberry_pickup_prepaid_status %}
@@ -348,9 +357,18 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Включить настройки расчёта #}
                                         <div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="pickup_prepaid_sucrh">{{ text_sucrh }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_pickup_prepaid_sucrh" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_pickup_prepaid_sucrh" value="1" id="pickup_prepaid_sucrh" class="form-check-input"{% if shipping_boxberry_pickup_prepaid_sucrh %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="pickup_prepaid_sucrh">{{ text_sucrh }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="pickup_prepaid_sucrh" name="shipping_boxberry_pickup_prepaid_sucrh">
@@ -363,9 +381,18 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Выгружать в ЛК автоматически #}
                                         <div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="pickup_prepaid_parselcreate_auto">{{ text_parselcreate_auto }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_pickup_prepaid_parselcreate_auto" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_pickup_prepaid_parselcreate_auto" value="1" id="pickup_prepaid_parselcreate_auto" class="form-check-input"{% if shipping_boxberry_pickup_prepaid_parselcreate_auto %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="pickup_prepaid_parselcreate_auto">{{ text_parselcreate_auto }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="pickup_prepaid_parselcreate_auto" name="shipping_boxberry_pickup_prepaid_parselcreate_auto">
@@ -378,9 +405,18 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Формировать акт автоматически после выгрузки заказа в ЛК #}
                                         <div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="pickup_prepaid_parselsend_auto">{{ text_parselsend_auto }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_pickup_prepaid_parselsend_auto" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_pickup_prepaid_parselsend_auto" value="1" id="pickup_prepaid_parselsend_auto" class="form-check-input"{% if shipping_boxberry_pickup_prepaid_parselsend_auto %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="pickup_prepaid_parselsend_auto">{{ text_parselsend_auto }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="pickup_prepaid_parselsend_auto" name="shipping_boxberry_pickup_prepaid_parselsend_auto">
@@ -393,7 +429,7 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Имя #}
                                         <div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="pickup_prepaid_name">{{ text_name }}</label>
@@ -413,6 +449,15 @@
                                         {# Статус #}
                                         <div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="courier_delivery_status">{{ text_status }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_courier_delivery_status" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_courier_delivery_status" value="1" id="courier_delivery_status" class="form-check-input"{% if shipping_boxberry_courier_delivery_status %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="courier_delivery_status">{{ text_status }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="courier_delivery_status" name="shipping_boxberry_courier_delivery_status">
                                                     {% if shipping_boxberry_courier_delivery_status %}
@@ -424,9 +469,18 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Включить настройки расчёта #}
                                         <div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="courier_delivery_sucrh">{{ text_sucrh }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_courier_delivery_sucrh" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_courier_delivery_sucrh" value="1" id="courier_delivery_sucrh" class="form-check-input"{% if shipping_boxberry_courier_delivery_sucrh %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="courier_delivery_sucrh">{{ text_sucrh }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="courier_delivery_sucrh" name="shipping_boxberry_courier_delivery_sucrh">
@@ -439,9 +493,18 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Выгружать в ЛК автоматически #}
                                         <div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="courier_delivery_parselcreate_auto">{{ text_parselcreate_auto }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_courier_delivery_parselcreate_auto" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_courier_delivery_parselcreate_auto" value="1" id="courier_delivery_parselcreate_auto" class="form-check-input"{% if shipping_boxberry_courier_delivery_parselcreate_auto %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="courier_delivery_parselcreate_auto">{{ text_parselcreate_auto }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="courier_delivery_parselcreate_auto" name="shipping_boxberry_courier_delivery_parselcreate_auto">
@@ -454,9 +517,18 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Формировать акт автоматически после выгрузки заказа в ЛК #}
                                         <div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="courier_delivery_parselsend_auto">{{ text_parselsend_auto }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_courier_delivery_parselsend_auto" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_courier_delivery_parselsend_auto" value="1" id="courier_delivery_parselsend_auto" class="form-check-input"{% if shipping_boxberry_courier_delivery_parselsend_auto %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="courier_delivery_parselsend_auto">{{ text_parselsend_auto }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="courier_delivery_parselsend_auto" name="shipping_boxberry_courier_delivery_parselsend_auto">
@@ -469,7 +541,7 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Имя #}
                                         <div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="courier_delivery_name">{{ text_name }}</label>
@@ -485,9 +557,18 @@
                                     <div class="card-header">
                                         <h3 class="panel-title">{{ text_courier_delivery_prepaid }}</h3>
                                     </div>
-                                    {# Статус #}
                                     <div class="card-body">
+                                        {# Статус #}
                                         <div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="courier_delivery_prepaid_status">{{ text_status }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_courier_delivery_prepaid_status" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_courier_delivery_prepaid_status" value="1" id="courier_delivery_prepaid_status" class="form-check-input"{% if shipping_boxberry_courier_delivery_prepaid_status %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="courier_delivery_prepaid_status">{{ text_status }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="courier_delivery_prepaid_status" name="shipping_boxberry_courier_delivery_prepaid_status">
@@ -500,9 +581,18 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Включить настройки расчёта #}
                                         <div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="courier_delivery_prepaid_sucrh">{{ text_sucrh }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_courier_delivery_prepaid_sucrh" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_courier_delivery_prepaid_sucrh" value="1" id="courier_delivery_prepaid_sucrh" class="form-check-input"{% if shipping_boxberry_courier_delivery_prepaid_sucrh %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="courier_delivery_prepaid_sucrh">{{ text_sucrh }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="courier_delivery_prepaid_sucrh" name="shipping_boxberry_courier_delivery_prepaid_sucrh">
@@ -515,9 +605,18 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Выгружать в ЛК автоматически #}
                                         <div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="courier_delivery_prepaid_parselcreate_auto">{{ text_parselcreate_auto }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_courier_delivery_prepaid_parselcreate_auto" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_courier_delivery_prepaid_parselcreate_auto" value="1" id="courier_delivery_prepaid_parselcreate_auto" class="form-check-input"{% if shipping_boxberry_courier_delivery_prepaid_parselcreate_auto %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="courier_delivery_prepaid_parselcreate_auto">{{ text_parselcreate_auto }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="courier_delivery_prepaid_parselcreate_auto" name="shipping_boxberry_courier_delivery_prepaid_parselcreate_auto">
@@ -530,9 +629,18 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Формировать акт автоматически после выгрузки заказа в ЛК #}
                                         <div class="row mb-3">
+                                            <label class="col-form-label col-sm-3" for="courier_delivery_prepaid_parselsend_auto">{{ text_parselsend_auto }}</label>
+                                            <div class="col-sm-3">
+                                                <div class="form-check form-switch form-switch-lg">
+                                                    <input type="hidden" name="shipping_boxberry_courier_delivery_prepaid_parselsend_auto" value="0"/>
+                                                    <input type="checkbox" name="shipping_boxberry_courier_delivery_prepaid_parselsend_auto" value="1" id="courier_delivery_prepaid_parselsend_auto" class="form-check-input"{% if shipping_boxberry_courier_delivery_prepaid_parselsend_auto %} checked{% endif %}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#<div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="courier_delivery_prepaid_parselsend_auto">{{ text_parselsend_auto }}</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" id="courier_delivery_prepaid_parselsend_auto" name="shipping_boxberry_courier_delivery_prepaid_parselsend_auto">
@@ -545,7 +653,7 @@
                                                     {% endif %}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         {# Имя #}
                                         <div class="row mb-3">
                                             <label class="col-form-label col-sm-3" for="courier_delivery_prepaid_name">{{ text_name }}</label>

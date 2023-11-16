@@ -44,6 +44,15 @@ class Boxberry extends \Opencart\System\Engine\Controller
         $data['save'] = $this->url->link('extension/boxberry/shipping/boxberry.save', 'user_token=' . $this->session->data['user_token']);
         $data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
 
+        $this->load->model('localisation/order_status');
+        $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+        $this->load->model('localisation/weight_class');
+        $data['weight_ids'] = $this->model_localisation_weight_class->getWeightClasses();
+
+        $this->load->model('localisation/length_class');
+        $data['length_ids'] = $this->model_localisation_length_class->getLengthClasses();
+
         /*$this->load->model('localisation/weight_class');
         if (($weight = $this->model_localisation_weight_class->getWeightClassDescriptionByUnit('g'))
             || ($weight = $this->model_localisation_weight_class->getWeightClassDescriptionByUnit('г'))) {
@@ -58,163 +67,150 @@ class Boxberry extends \Opencart\System\Engine\Controller
 
         $fields = [
             [
+                'name' => 'shipping_boxberry_status',
+                'default' => '0'
+            ],
+            [
                 'name' => 'shipping_boxberry_api_url',
-                'default' => $this->request->post['shipping_boxberry_api_url'] ?? 'https://api.boxberry.ru/json.php'
+                'default' => 'https://api.boxberry.ru/json.php'
             ],
             [
                 'name' => 'shipping_boxberry_widget_url',
-                'default' => $this->request->post['shipping_boxberry_widget_url'] ?? 'https://points.boxberry.de/js/boxberry.js'
+                'default' => 'https://points.boxberry.de/js/boxberry.js'
             ],
             [
                 'name' => 'shipping_boxberry_api_token',
-                'default' => $this->request->post['shipping_boxberry_api_token'] ?? ''
-            ],
-            [
-                'name' => 'shipping_boxberry_sort_order',
-                'default' => $this->request->post['shipping_boxberry_sort_order'] ?? ''
-            ],
-            [
-                'name' => 'shipping_boxberry_status',
-                'default' => $this->request->post['shipping_boxberry_status'] ?? '0'
-            ],
-            [
-                'name' => 'shipping_boxberry_weight',
-                'default' => $this->request->post['shipping_boxberry_weight'] ?? '500'
-            ],
-            [
-                'name' => 'shipping_boxberry_weight_min',
-                'default' => $this->request->post['shipping_boxberry_weight_min'] ?? '5'
-            ],
-            [
-                'name' => 'shipping_boxberry_weight_max',
-                'default' => $this->request->post['shipping_boxberry_weight_max'] ?? '31000'
-            ],
-            [
-                'name' => 'shipping_boxberry_package_size',
-                'default' => $this->request->post['shipping_boxberry_package_size'] ?? ''
-            ],
-            [
-                'name' => 'shipping_boxberry_width',
-                'default' => $this->request->post['shipping_boxberry_width'] ?? ''
-            ],
-            [
-                'name' => 'shipping_boxberry_height',
-                'default' => $this->request->post['shipping_boxberry_height'] ?? ''
-            ],
-            [
-                'name' => 'shipping_boxberry_depth',
-                'default' => $this->request->post['shipping_boxberry_depth'] ?? ''
+                'default' => ''
             ],
             [
                 'name' => 'shipping_boxberry_order_status',
-                'default' => $this->request->post['shipping_boxberry_order_status'] ?? ''
+                'default' => ''
+            ],
+            [
+                'name' => 'shipping_boxberry_sort_order',
+                'default' => ''
+            ],
+            [
+                'name' => 'shipping_boxberry_weight',
+                'default' => '500'
+            ],
+            [
+                'name' => 'shipping_boxberry_weight_min',
+                'default' => '5'
+            ],
+            [
+                'name' => 'shipping_boxberry_weight_max',
+                'default' => '31000'
+            ],
+            [
+                'name' => 'shipping_boxberry_package_size',
+                'default' => ''
+            ],
+            [
+                'name' => 'shipping_boxberry_width',
+                'default' => ''
+            ],
+            [
+                'name' => 'shipping_boxberry_height',
+                'default' => ''
+            ],
+            [
+                'name' => 'shipping_boxberry_depth',
+                'default' => ''
             ],
             [
                 'name' => 'shipping_boxberry_weight_class_id',
-                'default' => $this->request->post['shipping_boxberry_weight_class_id'] ?? ''
+                'default' => ''
             ],
             [
                 'name' => 'shipping_boxberry_length_class_id',
-                'default' => $this->request->post['shipping_boxberry_length_class_id'] ?? ''
+                'default' => ''
             ],
             [
                 'name' => 'shipping_boxberry_pickup_status',
-                'default' => $this->request->post['shipping_boxberry_pickup_status'] ?? ''
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_prepaid_status',
-                'default' => $this->request->post['shipping_boxberry_pickup_prepaid_status'] ?? ''
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_status',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_status'] ?? ''
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_prepaid_status',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_prepaid_status'] ?? ''
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_sucrh',
-                'default' => $this->request->post['shipping_boxberry_pickup_sucrh'] ?? '0'
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_prepaid_sucrh',
-                'default' => $this->request->post['shipping_boxberry_pickup_prepaid_sucrh'] ?? '0'
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_sucrh',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_sucrh'] ?? '0'
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_prepaid_sucrh',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_prepaid_sucrh'] ?? '0'
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_parselcreate_auto',
-                'default' => $this->request->post['shipping_boxberry_pickup_parselcreate_auto'] ?? '0'
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_prepaid_parselcreate_auto',
-                'default' => $this->request->post['shipping_boxberry_pickup_prepaid_parselcreate_auto'] ?? '0'
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_parselcreate_auto',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_parselcreate_auto'] ?? '0'
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_prepaid_parselcreate_auto',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_prepaid_parselcreate_auto'] ?? '0'
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_parselsend_auto',
-                'default' => $this->request->post['shipping_boxberry_pickup_parselsend_auto'] ?? ''
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_prepaid_parselsend_auto',
-                'default' => $this->request->post['shipping_boxberry_pickup_prepaid_parselsend_auto'] ?? ''
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_parselsend_auto',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_parselsend_auto'] ?? ''
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_prepaid_parselsend_auto',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_prepaid_parselsend_auto'] ?? ''
+                'default' => '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_name',
-                'default' => $this->request->post['shipping_boxberry_pickup_name'] ?? $this->language->get('text_pickup_description')
+                'default' => $this->language->get('text_pickup_description')
             ],
             [
                 'name' => 'shipping_boxberry_pickup_prepaid_name',
-                'default' => $this->request->post['shipping_boxberry_pickup_prepaid_name'] ?? $this->language->get('text_pickup_prepaid_description')
+                'default' => $this->language->get('text_pickup_prepaid_description')
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_name',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_name'] ?? $this->language->get('text_courier_delivery_description')
+                'default' => $this->language->get('text_courier_delivery_description')
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_prepaid_name',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_prepaid_name'] ?? $this->language->get('text_courier_delivery_prepaid_description')
-            ],
+                'default' => $this->language->get('text_courier_delivery_prepaid_description')
+            ]
         ];
 
         foreach ($fields as $field) {
-            $fieldName = $field['name'];
-            $configValue = $this->config->get($fieldName);
-            $data[$fieldName] = $this->request->post[$fieldName] ?? null;
-            $data[$fieldName] = $data[$fieldName] === null ? $configValue : null;
-            $data[$fieldName] = $data[$fieldName] === null ? $field['default'] : $data[$fieldName];
+            $data[$field['name']] = $this->config->get($field['name']) ?? $field['default'] ?? '';
         }
-
-        $this->load->model('localisation/order_status');
-        $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-        $this->load->model('localisation/weight_class');
-        $data['weight_ids'] = $this->model_localisation_weight_class->getWeightClasses();
-
-        $this->load->model('localisation/length_class');
-        $data['length_ids'] = $this->model_localisation_length_class->getLengthClasses();
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -223,6 +219,9 @@ class Boxberry extends \Opencart\System\Engine\Controller
         $this->response->setOutput($this->load->view('extension/boxberry/shipping/boxberry', $data));
     }
 
+    /**
+     * @return void
+     */
     public function save(): void
     {
         $this->load->language('extension/boxberry/shipping/boxberry');

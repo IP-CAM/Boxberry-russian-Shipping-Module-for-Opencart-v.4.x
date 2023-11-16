@@ -1,6 +1,9 @@
 <?php
+
 namespace Opencart\Admin\Controller\Extension\Boxberry\Shipping;
+
 use Boxberry\Client\Client;
+
 if (!class_exists('Client')) {
     require_once DIR_EXTENSION . 'boxberry/system/library/boxberry/autoload.php';
 }
@@ -72,7 +75,7 @@ class Boxberry extends \Opencart\System\Engine\Controller
             ],
             [
                 'name' => 'shipping_boxberry_status',
-                'default' => $this->request->post['shipping_boxberry_status'] ?? '1'
+                'default' => $this->request->post['shipping_boxberry_status'] ?? '0'
             ],
             [
                 'name' => 'shipping_boxberry_weight',
@@ -85,10 +88,6 @@ class Boxberry extends \Opencart\System\Engine\Controller
             [
                 'name' => 'shipping_boxberry_weight_max',
                 'default' => $this->request->post['shipping_boxberry_weight_max'] ?? '31000'
-            ],
-            [
-                'name' => 'shipping_boxberry_size',
-                'default' => $this->request->post['shipping_boxberry_size'] ?? ''
             ],
             [
                 'name' => 'shipping_boxberry_package_size',
@@ -136,39 +135,35 @@ class Boxberry extends \Opencart\System\Engine\Controller
             ],
             [
                 'name' => 'shipping_boxberry_pickup_sucrh',
-                'default' => $this->request->post['shipping_boxberry_pickup_sucrh'] ?? '1'
+                'default' => $this->request->post['shipping_boxberry_pickup_sucrh'] ?? '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_prepaid_sucrh',
-                'default' => $this->request->post['shipping_boxberry_pickup_prepaid_sucrh'] ?? '1'
+                'default' => $this->request->post['shipping_boxberry_pickup_prepaid_sucrh'] ?? '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_sucrh',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_sucrh'] ?? '1'
+                'default' => $this->request->post['shipping_boxberry_courier_delivery_sucrh'] ?? '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_prepaid_sucrh',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_prepaid_sucrh'] ?? '1'
-            ],
-            [
-                'name' => 'shipping_boxberry_courier_delivery_prepaid_status',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_prepaid_status'] ?? ''
+                'default' => $this->request->post['shipping_boxberry_courier_delivery_prepaid_sucrh'] ?? '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_parselcreate_auto',
-                'default' => $this->request->post['shipping_boxberry_pickup_parselcreate_auto'] ?? '1'
+                'default' => $this->request->post['shipping_boxberry_pickup_parselcreate_auto'] ?? '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_prepaid_parselcreate_auto',
-                'default' => $this->request->post['shipping_boxberry_pickup_prepaid_parselcreate_auto'] ?? '1'
+                'default' => $this->request->post['shipping_boxberry_pickup_prepaid_parselcreate_auto'] ?? '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_parselcreate_auto',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_parselcreate_auto'] ?? '1'
+                'default' => $this->request->post['shipping_boxberry_courier_delivery_parselcreate_auto'] ?? '0'
             ],
             [
                 'name' => 'shipping_boxberry_courier_delivery_prepaid_parselcreate_auto',
-                'default' => $this->request->post['shipping_boxberry_courier_delivery_prepaid_parselcreate_auto'] ?? '1'
+                'default' => $this->request->post['shipping_boxberry_courier_delivery_prepaid_parselcreate_auto'] ?? '0'
             ],
             [
                 'name' => 'shipping_boxberry_pickup_parselsend_auto',
@@ -277,91 +272,5 @@ class Boxberry extends \Opencart\System\Engine\Controller
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
-    }
-
-    public function install(): void
-    {
-        $this->load->model('user/user_group');
-        $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'sale/boxberry');
-
-        $events = [
-            'addOrderHistory' => [
-                'code'        => 'boxberry_order_status_edit',
-                'description' => 'Создаёт заказ в личном кабинете Boxberry',
-                'trigger'     => 'catalog/model/checkout/order/addOrderHistory/after',
-                'action'      => 'event/boxberry/addOrderHistory',
-                'status'      => '1',
-                'sort_order'  => '1'
-            ],
-            'addScripts' => [
-                'code'        => 'boxberry_add_scripts',
-                'description' => 'Подключает скрипты для виджета Boxberry',
-                'trigger'     => 'catalog/controller/common/header/before',
-                'action'      => 'event/boxberry/addScripts',
-                'status'      => '1',
-                'sort_order'  => '1'
-            ]
-        ];
-
-        $this->load->model('setting/event');
-        foreach ($events as $event) {
-            $this->model_setting_event->addEvent($event);
-        }
-
-        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "boxberry_cities` (
-      `code` VARCHAR(128) NOT NULL,
-      `name` VARCHAR(128),
-      `region` VARCHAR(128),
-      `data` text,
-      PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;");
-
-        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "boxberry_deliveries` (
-      `order_id` int(10) NOT NULL,      
-      `im_id` VARCHAR(255),
-      `label` VARCHAR(255),
-      `boxberry_to_point` VARCHAR(15),
-      `address` VARCHAR(255),
-      `error` VARCHAR(255),
-      PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;");
-
-        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "boxberry_points` (
-      `code` VARCHAR(128) NOT NULL,
-      `city_code` VARCHAR(128),
-      `data` text,
-      `expired` datetime,
-      `prepaid` tinyint(1),
-      PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;");
-
-        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "boxberry_listzips` (
-      `zip` VARCHAR(128) NOT NULL,
-      `city` VARCHAR(128),
-      `area` VARCHAR(128),
-      PRIMARY KEY (`zip`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;");
-
-        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "boxberry_expired` (
-      `table` VARCHAR(128) NOT NULL,
-      `expired` datetime,
-      PRIMARY KEY (`table`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;");
-    }
-
-    public function uninstall(): void
-    {
-        $this->load->model('user/user_group');
-        $this->model_user_user_group->removePermission($this->user->getGroupId(), 'access', 'sale/boxberry');
-
-        $this->load->model('setting/event');
-        $this->model_setting_event->deleteEventByCode('boxberry_order_status_edit');
-        $this->model_setting_event->deleteEventByCode('boxberry_add_scripts');
-
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "boxberry_cities`;");
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "boxberry_deliveries`;");
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "boxberry_points`;");
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "boxberry_listzips`;");
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "boxberry_expired`;");
     }
 }

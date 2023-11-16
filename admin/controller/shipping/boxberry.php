@@ -3,10 +3,11 @@
 namespace Opencart\Admin\Controller\Extension\Boxberry\Shipping;
 
 use Boxberry\Client\Client;
-/*
+
 if (!class_exists('Client')) {
-    require_once DIR_SYSTEM . 'library/boxberry/autoload.php';
-}*/
+    require_once DIR_EXTENSION . 'boxberry/system/library/boxberry/autoload.php';
+}
+
 class Boxberry extends \Opencart\System\Engine\Controller
 {
     private array $error = [];
@@ -36,7 +37,7 @@ class Boxberry extends \Opencart\System\Engine\Controller
 
         $data['route'] = "extension/boxberry/shipping/boxberry";
 
-        $this->load->model('localisation/weight_class');
+        /*$this->load->model('localisation/weight_class');
         if (($weight = $this->model_localisation_weight_class->getWeightClassDescriptionByUnit('g'))
             || ($weight = $this->model_localisation_weight_class->getWeightClassDescriptionByUnit('г'))) {
             $this->request->post['shipping_boxberry_weight_class_id'] = $weight['weight_class_id'];
@@ -46,7 +47,7 @@ class Boxberry extends \Opencart\System\Engine\Controller
         if (($length = $this->model_localisation_length_class->getLengthClassDescriptionByUnit('cm'))
             || ($length = $this->model_localisation_length_class->getLengthClassDescriptionByUnit('см'))) {
             $this->request->post['shipping_boxberry_length_class_id'] = $length['length_class_id'];
-        }
+        }*/
 
         if (($this->request->server['REQUEST_METHOD'] === 'POST') && $this->validate()) {
             $client = new Client();
@@ -253,7 +254,7 @@ class Boxberry extends \Opencart\System\Engine\Controller
 
     protected function validate(): bool
     {
-        if (!$this->user->hasPermission('modify', 'extension/shipping/boxberry')) {
+        if (!$this->user->hasPermission('modify', 'extension/boxberry/shipping/boxberry')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
         if (!$this->request->post['shipping_boxberry_api_token']) {

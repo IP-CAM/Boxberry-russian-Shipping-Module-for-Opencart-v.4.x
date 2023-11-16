@@ -1,17 +1,20 @@
 <?php
-
 namespace Opencart\Admin\Controller\Extension\Boxberry\Shipping;
-
 use Boxberry\Client\Client;
-
 if (!class_exists('Client')) {
     require_once DIR_EXTENSION . 'boxberry/system/library/boxberry/autoload.php';
 }
 
+/**
+ * Class Boxberry
+ *
+ * @package Opencart\Admin\Controller\Extension\Boxberry\Shipping
+ */
 class Boxberry extends \Opencart\System\Engine\Controller
 {
-    private array $error = [];
-
+    /**
+     * @return void
+     */
     public function index(): void
     {
         $this->load->language('extension/boxberry/shipping/boxberry');
@@ -35,7 +38,8 @@ class Boxberry extends \Opencart\System\Engine\Controller
             'href' => $this->url->link('extension/boxberry/shipping/boxberry', 'user_token=' . $this->session->data['user_token'])
         ];
 
-        $data['route'] = "extension/boxberry/shipping/boxberry";
+        $data['save'] = $this->url->link('extension/boxberry/shipping/boxberry.save', 'user_token=' . $this->session->data['user_token']);
+        $data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
 
         /*$this->load->model('localisation/weight_class');
         if (($weight = $this->model_localisation_weight_class->getWeightClassDescriptionByUnit('g'))
@@ -48,34 +52,6 @@ class Boxberry extends \Opencart\System\Engine\Controller
             || ($length = $this->model_localisation_length_class->getLengthClassDescriptionByUnit('см'))) {
             $this->request->post['shipping_boxberry_length_class_id'] = $length['length_class_id'];
         }*/
-
-        if (($this->request->server['REQUEST_METHOD'] === 'POST') && $this->validate()) {
-            $client = new Client();
-            $client->setKey($this->request->post['shipping_boxberry_api_token']);
-            $client->setApiUrl($this->request->post['shipping_boxberry_api_url']);
-            $getKeyIntegrationRequest = $client->getKeyIntegration();
-            try {
-                $response = $client->execute($getKeyIntegrationRequest);
-                $this->request->post['shipping_boxberry_widget_key'] = $response->getKeyIntegration();
-                $this->load->model('setting/setting');
-                $this->model_setting_setting->editSetting('shipping_boxberry', $this->request->post);
-                $this->model_setting_setting->editSetting('boxberry', ['boxberry_status' => $this->request->post['shipping_boxberry_status']]);
-                $this->session->data['success'] = $this->language->get('text_success');
-                $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping'));
-            } catch (Exception $e) {
-                if ($e->getMessage() === 'Ошибка обращения к сервису доставки Boxberry') {
-                    $this->error['warning'] = 'Указан неверный URL API сервиса';
-                } elseif ($e->getMessage() === 'Нет доступа') {
-                    $this->error['warning'] = 'Указан неверный API-токен';
-                } elseif ($e->getMessage() === 'Ваша учетная запись заблокирована') {
-                    $this->error['warning'] = 'Учетная запись с данным API-токеном заблокирована';
-                }
-            }
-        }
-
-        $data['error_warning'] = $this->error['warning'] ?? '';
-        $data['action'] = $this->url->link('extension/boxberry/shipping/boxberry', 'user_token=' . $this->session->data['user_token']);
-        $data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
 
         $fields = [
             [
@@ -252,24 +228,55 @@ class Boxberry extends \Opencart\System\Engine\Controller
         $this->response->setOutput($this->load->view('extension/boxberry/shipping/boxberry', $data));
     }
 
-    protected function validate(): bool
+    public function save(): void
     {
+        $this->load->language('extension/boxberry/shipping/boxberry');
+
+        $json = [];
+
         if (!$this->user->hasPermission('modify', 'extension/boxberry/shipping/boxberry')) {
-            $this->error['warning'] = $this->language->get('error_permission');
+            $json['error'] = $this->language->get('error_permission');
         }
         if (!$this->request->post['shipping_boxberry_api_token']) {
-            $this->error['warning'] = $this->language->get('error_api_key');
+            $json['error'] = $this->language->get('error_api_key');
         }
         if (!$this->request->post['shipping_boxberry_api_url']) {
-            $this->error['warning'] = 'Не указан Url для API сервиса!';
+            $json['error'] = $this->language->get('error_api_url');
         }
         if (!$this->request->post['shipping_boxberry_weight']) {
-            $this->error['warning'] = 'Не указан вес по умолчанию!';
+            $json['error'] = $this->language->get('error_weight');
         }
         if (!$this->request->post['shipping_boxberry_widget_url']) {
-            $this->error['warning'] = 'Не указан Url для виджета';
+            $json['error'] = $this->language->get('error_widget_url');
         }
-        return !$this->error;
+
+        $client = new Client();
+        $client->setKey($this->request->post['shipping_boxberry_api_token']);
+        $client->setApiUrl($this->request->post['shipping_boxberry_api_url']);
+        $getKeyIntegrationRequest = $client->getKeyIntegration();
+        try {
+            $response = $client->execute($getKeyIntegrationRequest);
+            $this->request->post['shipping_boxberry_widget_key'] = $response->getKeyIntegration();
+        } catch (\Exception $e) {
+            if ($e->getMessage() === 'Ошибка обращения к сервису доставки Boxberry') {
+                $json['error'] = $this->language->get('error_wrong_api_url');
+            } elseif ($e->getMessage() === 'Нет доступа') {
+                $json['error'] = $this->language->get('error_wrong_api_key');
+            } elseif ($e->getMessage() === 'Ваша учетная запись заблокирована') {
+                $json['error'] = $this->language->get('error_blocked_api_key');
+            }
+        }
+
+        if (!$json) {
+            $this->load->model('setting/setting');
+
+            $this->model_setting_setting->editSetting('shipping_boxberry', $this->request->post);
+
+            $json['success'] = $this->language->get('text_success');
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
     }
 
     public function install(): void

@@ -56,4 +56,11 @@ $_['text_apply_package_size_yes']               = 'Да';
 $_['text_apply_package_size_no']                = 'Нет';
 
 // Error
-$_['error_api_key']                             = 'Укажите API-Токен Boxberry';
+$_['error_api_key']                             = 'Не указан API-Токен Boxberry';
+$_['error_wrong_api_key']                       = 'Указан неверный API-Токен';
+$_['error_blocked_api_key']                     = 'Учетная запись с данным API-токеном заблокирована';
+$_['error_api_url']                             = 'Не указан URL для API сервиса';
+$_['error_wrong_api_url']                       = 'Указан неверный URL API сервиса';
+$_['error_widget_url']                          = 'Не указан URL для виджета';
+$_['error_weight']                              = 'Не указан вес по умолчанию';
+$_['error_permission']                          = 'Недостаточно прав для записи';

@@ -3,8 +3,10 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="float-end">
-                <button type="submit" form="form-boxberry" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+                {# Кнопка сохранить #}
+                <button type="submit" form="form-boxberry" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
+                {# Кнопка назад #}
+                <a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
             </div>
             <h1>{{ heading_title }}</h1>
             <ol class="breadcrumb">
@@ -15,20 +17,17 @@
         </div>
     </div>
     <div class="container-fluid">
-        {% if error_warning %}
-            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-        {% endif %}
         <div class="card">
             <div class="card-body">
-                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-boxberry" class="form-horizontal">
+                <form id="form-boxberry" action="{{ save }}" method="post" data-oc-toggle="ajax" class="form-horizontal">
                     <div class="d-flex align-items-start">
+                        {# Переключение категории #}
                         <div class="nav flex-column nav-pills me-3 col-sm-2" role="tablist" aria-orientation="vertical">
                             <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-accesses" type="button" role="tab" aria-selected="true">{{ tab_accesses }}</button>
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-weights-dimensions" type="button" role="tab" aria-selected="false">{{ tab_weights_dimensions }}</button>
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-shipping-profiles" type="button" role="tab" aria-selected="false">{{ tab_shipping_profiles }}</button>
                         </div>
+                        {# Основное окно #}
                         <div class="tab-content col-sm-10">
                             {# Настройки доступа #}
                             <div class="tab-pane active show" id="tab-accesses" role="tabpanel" tabindex="0">

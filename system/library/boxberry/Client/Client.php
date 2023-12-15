@@ -30,7 +30,7 @@ use HttpException;
  * Class Client
  * @package Boxberry\Client
  *
- * @var string $key
+ * @var string $api_token
  * @var string $api_url
  * @var string $production_url
  * @var string $dadataApiUrl
@@ -40,7 +40,7 @@ use HttpException;
  */
 class Client
 {
-    protected string $key                = '';
+    protected string $api_token          = '';
     protected string $api_url            = '';
     protected string $production_url     = 'https://api.boxberry.ru/json.php';
     protected string $dadataApiUrl       = 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address';
@@ -73,17 +73,17 @@ class Client
     /**
      * @return string
      */
-    public function getKey(): string
+    public function getApiToken(): string
     {
-        return $this->key;
+        return $this->api_token;
     }
 
     /**
-     * @param string $key
+     * @param string $api_token
      */
-    public function setKey(string $key): void
+    public function setApiToken(string $api_token): void
     {
-        $this->key = $key;
+        $this->api_token = $api_token;
     }
 
     /**
@@ -322,7 +322,7 @@ class Client
      */
     public function execute(Request $request): object|bool
     {
-        if ($this->api_url === '' || $this->key === '') {
+        if ($this->api_url === '' || $this->api_token === '') {
             throw new BadSettingsException('Проверьте секретный ключ и адрес апи');
         }
 
@@ -340,7 +340,7 @@ class Client
             );
 
             $credentials = array(
-                'token' => $this->key,
+                'token' => $this->api_token,
                 'method' => $request->getClassName()
             );
 
@@ -365,7 +365,7 @@ class Client
         } else {
             $data = array(
                 'method' => $request->getClassName(),
-                'token'  => $this->key
+                'token'  => $this->api_token
             );
             $data = array_merge($data, $serializer->toArray($request));
             $answer = HTTP::get($this->api_url, $data)->getAnswer();

@@ -53,7 +53,7 @@ class Boxberry extends \Opencart\System\Engine\Model
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;");
 
         $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "boxberry_deliveries` (
-      `order_id` int(10) NOT NULL,      
+      `order_id` int(10) NOT NULL,
       `im_id` VARCHAR(255),
       `label` VARCHAR(255),
       `boxberry_to_point` VARCHAR(15),
@@ -111,7 +111,7 @@ class Boxberry extends \Opencart\System\Engine\Model
             $this->load->model('boxberry/point');
 
             $client = new Client();
-            $client->setKey($this->config->get('shipping_boxberry_api_token'));
+            $client->setApiToken($this->config->get('shipping_boxberry_api_token'));
             $client->setApiUrl($this->config->get('shipping_boxberry_api_url'));
 
             $description = $client::getPointsDescription();

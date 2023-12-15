@@ -6,7 +6,6 @@ $_['heading_title']                             = 'Boxberry';
 $_['tab_general']                               = 'Общие настройки';
 $_['tab_accesses']                              = 'Настройки доступа';
 $_['tab_weights_dimensions']                    = 'Настройки веса и габаритов';
-$_['tab_statuses']                              = 'Настройки статусов';
 $_['tab_shipping_profiles']                     = 'Настройки способов доставки';
 
 // Text
@@ -16,14 +15,14 @@ $_['text_success']                              = 'Настройки модул
 $_['text_enabled']                              = 'Включено';
 $_['text_disabled']                             = 'Отключено';
 $_['text_api_token']                            = 'API-Токен*';
-$_['text_api_token_tooltip']                    = 'Получите в ЛК Boxberry в разделе Инфоцентр-Интеграция-Методы API';
 $_['text_widget_url']                           = 'URL для виджета*';
 $_['text_widget_key']                           = 'Ключ интеграции';
 $_['text_api_url']                              = 'URL API сервиса*';
 $_['text_status']                               = 'Статус';
 $_['text_order_status']                         = 'Статус для автоматической выгрузки в ЛК';
 $_['text_name']                                 = 'Название (для страницы оформления заказа)';
-$_['text_from_point']                           = 'ПВЗ откуда везем';
+$_['text_pickup_calculation']                   = 'Доставка до пункта выдачи';
+$_['text_courier_delivery_calculation']         = 'Курьерская доставка';
 $_['text_pickup']                               = 'Доставка до пункта выдачи (наложенный платеж)';
 $_['text_pickup_prepaid']                       = 'Доставка до пункта выдачи (предоплата)';
 $_['text_courier_delivery']                     = 'Курьерская доставка (наложенный платеж)';
@@ -55,10 +54,13 @@ $_['text_parselsend_auto_no']                   = 'Нет';
 $_['text_apply_package_size_yes']               = 'Да';
 $_['text_apply_package_size_no']                = 'Нет';
 
+// Tooltip
+$_['tooltip_api_token']                         = 'Перейти в ЛК ИМ Boxberry (необходима авторизация)';
+
 // Error
-$_['error_api_key']                             = 'Не указан API-Токен Boxberry';
-$_['error_wrong_api_key']                       = 'Указан неверный API-Токен';
-$_['error_blocked_api_key']                     = 'Учетная запись с данным API-токеном заблокирована';
+$_['error_api_token']                           = 'Не указан API-Токен Boxberry';
+$_['error_wrong_api_token']                     = 'Указан неверный API-Токен';
+$_['error_blocked_api_token']                   = 'Учетная запись с данным API-токеном заблокирована';
 $_['error_api_url']                             = 'Не указан URL для API сервиса';
 $_['error_wrong_api_url']                       = 'Указан неверный URL API сервиса';
 $_['error_widget_url']                          = 'Не указан URL для виджета';

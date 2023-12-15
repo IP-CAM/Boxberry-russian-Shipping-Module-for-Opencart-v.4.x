@@ -209,7 +209,13 @@ class Boxberry extends \Opencart\System\Engine\Controller
         ];
 
         foreach ($fields as $field) {
-            $data[$field['name']] = $this->config->get($field['name']) ?? $field['default'] ?? '';
+            if ($this->config->get($field['name']) !== '') {
+                $data[$field['name']] = $this->config->get($field['name']);
+            } elseif ($field['default'] !== '') {
+                $data[$field['name']] = $field['default'];
+            } else {
+                $data[$field['name']] = '';
+            }
         }
 
         $data['header'] = $this->load->controller('common/header');
@@ -232,7 +238,7 @@ class Boxberry extends \Opencart\System\Engine\Controller
             $json['error'] = $this->language->get('error_permission');
         }
         if (!$this->request->post['shipping_boxberry_api_token']) {
-            $json['error'] = $this->language->get('error_api_key');
+            $json['error'] = $this->language->get('error_api_token');
         }
         if (!$this->request->post['shipping_boxberry_api_url']) {
             $json['error'] = $this->language->get('error_api_url');
@@ -245,7 +251,7 @@ class Boxberry extends \Opencart\System\Engine\Controller
         }
 
         $client = new Client();
-        $client->setKey($this->request->post['shipping_boxberry_api_token']);
+        $client->setApiToken($this->request->post['shipping_boxberry_api_token']);
         $client->setApiUrl($this->request->post['shipping_boxberry_api_url']);
         $getKeyIntegrationRequest = $client->getKeyIntegration();
         try {
@@ -255,9 +261,9 @@ class Boxberry extends \Opencart\System\Engine\Controller
             if ($e->getMessage() === 'Ошибка обращения к сервису доставки Boxberry') {
                 $json['error'] = $this->language->get('error_wrong_api_url');
             } elseif ($e->getMessage() === 'Нет доступа') {
-                $json['error'] = $this->language->get('error_wrong_api_key');
+                $json['error'] = $this->language->get('error_wrong_api_token');
             } elseif ($e->getMessage() === 'Ваша учетная запись заблокирована') {
-                $json['error'] = $this->language->get('error_blocked_api_key');
+                $json['error'] = $this->language->get('error_blocked_api_token');
             }
         }
 

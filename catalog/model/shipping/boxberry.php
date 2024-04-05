@@ -128,14 +128,14 @@ class Boxberry extends \Opencart\System\Engine\Model
                     $deliveryPeriodText = '';
                 }
 
-                $htmlLink = '<a id="boxberry-issue_point-link' . ($prepaid === '1' ? '-prepaid' : '') . '" 
+                $htmlLink = '<a id="boxberry-issue_point-link' . ($prepaid === '1' ? '-prepaid' : '') . '"
                                          href = "#"
                                          data-boxberry-open="true"
                                          data-type="boxberryDeliverySelf' . ($prepaid === '1' ? 'Prepaid' : '') . '"
                                          data-boxberry-token="' . $this->config->get('shipping_boxberry_widget_key') . '"
                                          data-boxberry-city="' . trim($address['city']) . ' ' . $address['zone'] . '"
                                          data-api-url="' . $this->config->get('shipping_boxberry_api_url') . '"
-                                         data-sucrh="' . $this->config->get('shipping_boxberry_pickup' . ($prepaid === '1' ? '_prepaid' : '') . '_sucrh') . '"  
+                                         data-sucrh="' . $this->config->get('shipping_boxberry_pickup' . ($prepaid === '1' ? '_prepaid' : '') . '_sucrh') . '"
                                          data-boxberry-weight="' . $dimensions['weight'] . '"
                                          data-boxberry-width="' . $dimensions['width'] . '"
                                          data-boxberry-height="' . $dimensions['height'] . '"
@@ -273,7 +273,7 @@ class Boxberry extends \Opencart\System\Engine\Model
     public function getClient(): Client
     {
         $client = new Client();
-        $client->setKey($this->config->get('shipping_boxberry_api_token'));
+        $client->setApiToken($this->config->get('shipping_boxberry_api_token'));
         $client->setApiUrl($this->config->get('shipping_boxberry_api_url'));
 
         return $client;
@@ -363,8 +363,8 @@ class Boxberry extends \Opencart\System\Engine\Model
 
     public function getIssuePointById($issuePointId, $prepaid)
     {
-        $this->load->model('boxberry/point');
-        $point = $this->model_boxberry_point->getPoint($issuePointId, $prepaid);
+        $this->load->model('extension/boxberry/boxberry/point');
+        $point = $this->model_extension_boxberry_boxberry_point->getPoint($issuePointId, $prepaid);
 
         if (!$point || (strtotime($point['expired']) <= time())) {
             $client = $this->getClient();
@@ -381,7 +381,7 @@ class Boxberry extends \Opencart\System\Engine\Model
                     'data'      => $newPoint->getData(),
                     'prepaid'   => $prepaid
                 ];
-                $this->model_boxberry_point->addPoint($newPoint);
+                $this->model_extension_boxberry_boxberry_point->addPoint($newPoint);
 
                 return $newPoint['data'];
             } catch (Exception $e) {

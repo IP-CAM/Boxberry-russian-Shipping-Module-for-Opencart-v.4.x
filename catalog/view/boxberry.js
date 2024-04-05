@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let prepaid = paymentSum === '0' ? '-prepaid' : '';
 
             $.ajax({
-                url: "index.php?route=extension/shipping/boxberry/selectIssuePoint&issue_point_id=" + encodeURIComponent(result.id) + "&prepaid=" + (paymentSum !== "0" ? "0" : "1"),
+                url: "index.php?route=extension/boxberry/shipping/Boxberry.selectIssuePoint&issue_point_id=" + encodeURIComponent(result.id) + "&prepaid=" + (paymentSum !== "0" ? "0" : "1"),
                 success: function () {
                     $('#boxberry-issue_point' + prepaid + '-block').show();
                     $('#boxberry-issue_point'+ prepaid + '-name').text(result.name);

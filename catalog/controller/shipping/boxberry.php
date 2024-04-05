@@ -1,6 +1,6 @@
 <?php
 
-namespace Opencart\Catalog\Controller\Shipping;
+namespace Opencart\Catalog\Controller\Extension\Boxberry\Shipping;
 
 class Boxberry extends \Opencart\System\Engine\Controller
 {
@@ -9,8 +9,8 @@ class Boxberry extends \Opencart\System\Engine\Controller
         $issuePointId = $this->request->get['issue_point_id'];
         $prepaid = $this->request->get['prepaid'];
         if ($issuePointId) {
-            $this->load->model('extension/shipping/boxberry');
-            $issuePoint = $this->model_extension_shipping_boxberry->getIssuePointById($issuePointId, $prepaid);
+            $this->load->model('extension/boxberry/shipping/boxberry');
+            $issuePoint = $this->model_extension_boxberry_shipping_boxberry->getIssuePointById($issuePointId, $prepaid);
             if ($issuePoint) {
                 $json['postamat'] = $issuePoint['Postamat'];
                 $sessionData = [
